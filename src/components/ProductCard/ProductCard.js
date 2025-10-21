@@ -17,10 +17,11 @@ const ProductCard = (props) => {
     meta,
     showQuickView,
     height = 580,
+    slug,
   } = props;
 
   const handleRouteToProduct = () => {
-    navigate('/product/sample');
+    navigate(`/product/${slug}`);
   };
 
   const handleQuickView = (e) => {
@@ -40,7 +41,7 @@ const ProductCard = (props) => {
         onClick={() => handleRouteToProduct()}
         role={'presentation'}
       >
-        <img style={{ height: `${height}px` }} src={toOptimizedImage(image)} alt={imageAlt}></img>
+        <img style={{ height: `${height}px` }} src={image.url} alt={imageAlt}></img>
         <div
           className={styles.bagContainer}
           role={'presentation'}

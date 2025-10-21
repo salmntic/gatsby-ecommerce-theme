@@ -7,12 +7,13 @@ import Hero from '../../components/Hero';
 import Layout from '../../components/Layout/Layout';
 import ThemeLink from '../../components/ThemeLink';
 
-import { generateMockBlogData } from '../../helpers/mock';
 import * as styles from './index.module.css';
 import { toOptimizedImage } from '../../helpers/general';
+import { graphql } from 'gatsby';
 
 const BlogPage = (props) => {
-  const blogData = generateMockBlogData(6);
+  const { data } = props;
+  const articles = data.allStrapiArticle.nodes;
 
   return (
     <Layout disablePaddingBottom>
@@ -62,12 +63,30 @@ const BlogPage = (props) => {
         {/* Blog Grid */}
         <div className={styles.blogsContainer}>
           <Container size={'large'}>
-            <BlogPreviewGrid data={blogData} hideReadMoreOnWeb showExcerpt />
+            <BlogPreviewGrid data={articles} hideReadMoreOnWeb showExcerpt />
           </Container>
         </div>
       </div>
     </Layout>
   );
 };
+
+export const query = graphql`
+  query {
+    allStrapiArticle {
+      nodes {
+        id
+        title
+        content
+        slug
+        category
+        image {
+          url
+        }
+        alt
+      }
+    }
+  }
+`;
 
 export default BlogPage;

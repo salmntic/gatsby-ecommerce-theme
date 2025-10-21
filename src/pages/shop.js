@@ -10,13 +10,15 @@ import Icon from '../components/Icons/Icon';
 import Layout from '../components/Layout';
 import LayoutOption from '../components/LayoutOption';
 import ProductCardGrid from '../components/ProductCardGrid';
-import { generateMockProductData } from '../helpers/mock';
 import Button from '../components/Button';
 import Config from '../config.json';
+import { graphql } from 'gatsby';
 
 const ShopPage = (props) => {
+  const { data } = props;
   const [showFilter, setShowFilter] = useState(false);
-  const data = generateMockProductData(6, 'woman');
+  const products = data.allStrapiProduct.nodes;
+
 
   useEffect(() => {
     window.addEventListener('keydown', escapeHandler);
@@ -80,7 +82,7 @@ const ShopPage = (props) => {
           </div>
           <div className={styles.productContainer}>
             <span className={styles.mobileItemCount}>476 items</span>
-            <ProductCardGrid data={data}></ProductCardGrid>
+            <ProductCardGrid data={products}></ProductCardGrid>
           </div>
           <div className={styles.loadMoreContainer}>
             <span>6 of 456</span>
@@ -95,5 +97,24 @@ const ShopPage = (props) => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query {
+    allStrapiProduct {
+      nodes {
+        id
+        name
+        price
+        originalPrice
+        meta
+        slug
+        image {
+          url
+        }
+      }
+    }
+  }
+`;
+
 
 export default ShopPage;

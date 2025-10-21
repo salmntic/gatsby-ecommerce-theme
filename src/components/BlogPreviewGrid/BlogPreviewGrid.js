@@ -15,9 +15,9 @@ const BlogPreviewGrid = (props) => {
               image={blog.image}
               altImage={blog.alt}
               title={blog.title}
-              link={blog.link}
+              link={`/blog/${blog.slug}`}
               category={blog.category}
-              excerpt={blog.excerpt}
+              excerpt={blog.content}
               hideReadMoreOnWeb={hideReadMoreOnWeb}
               showExcerpt={showExcerpt}
             />
